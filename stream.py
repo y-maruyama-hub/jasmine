@@ -9,7 +9,7 @@ from flask import Flask, render_template, Response,request,jsonify,redirect,url_
 import datetime
 #import os
 #import glob
-#import time
+import time
 
 #import numpy as np
 
@@ -32,7 +32,7 @@ class MyCamera:
 
         return frame
 
-
+cam=MyCamera()
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 
@@ -42,7 +42,8 @@ def gen():
     while True:
         frame=cam.getframe()
 
-        if frame is None : break
+        if frame is None :
+            continue
 
         _,jpeg = cv2.imencode('.jpg', frame)
 
@@ -79,7 +80,7 @@ def cap():
 
 if __name__ == '__main__':
 
-    cam=MyCamera()
+
     app.run(host='0.0.0.0', debug=False,threaded=True)
 
 #    app.run(host='0.0.0.0', debug=True)
